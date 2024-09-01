@@ -15,29 +15,30 @@ const runCommand = (command: string) => {
     return true
 }
 
-const appName = process.argv[2];
-if (!process.argv[2]) {
-    console.error(chalk.redBright('Usage: npx create-tusk-app {appName}'));
-    process.exit(-1)
-}
+(async () => {
+    const appName = process.argv[2];
+    if (!process.argv[2]) {
+        console.error(chalk.redBright('Usage: npx create-tusk-app {appName}'));
+        process.exit(-1)
+    }
 
-if (fs.existsSync(appName)) {
-    console.error(chalk.redBright(`Error: ${appName} existed`));
-    process.exit(-1)
-}
+    if (fs.existsSync(appName)) {
+        console.error(chalk.redBright(`Error: ${appName} existed`));
+        process.exit(-1)
+    }
 
-const cloneCommand = `git clone --depth 1 https://github.com/sovaSniper/create-tusk-app ${appName}`
-const installCommand = `cd ${appName} && npm install`
+    const cloneCommand = `git clone --depth 1 https://github.com/Sorbin/tusk-dapp ${appName}`
+    const installCommand = `cd ${appName} && npm install`
 
-console.log(chalk.blue('Cloning ...'));
-const checkedOut = runCommand(cloneCommand)
-if (!checkedOut) process.exit(-1)
+    console.log(chalk.blue('Cloning ...'));
+    const checkedOut = runCommand(cloneCommand)
+    if (!checkedOut) process.exit(-1)
 
-console.log(chalk.blue('Installing ...'));
-const installed = runCommand(installCommand)
-if (!installed) process.exit(-1)
+    console.log(chalk.blue('Installing ...'));
+    const installed = runCommand(installCommand)
+    if (!installed) process.exit(-1)
 
-console.log(chalk.green('All done! 🎉'));
-console.log(chalk.blue(`\tcd ${appName}`));
-console.log(chalk.blue(`\tnpm run dev`));
-
+    console.log(chalk.green('All done! 🎉'));
+    console.log(chalk.blue(`\tcd ${appName}`));
+    console.log(chalk.blue(`\tnpm run dev`));
+})()
